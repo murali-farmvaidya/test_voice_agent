@@ -1,12 +1,27 @@
-FROM ghcr.io/dailyco/pipecat-base:latest
+FROM python:3.11-slim
 
-ENV UV_COMPILE_BYTECODE=1
-ENV UV_LINK_MODE=copy
+# System dependencies for audio / WebRTC
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    libsndfile1 \
+    libgl1 \
+    build-essential \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN --mount=type=cache,target=/root/.cache/uv \
-    --mount=type=bind,source=uv.lock,target=uv.lock \
-    --mount=type=bind,source=pyproject.toml,target=pyproject.toml \
-    uv sync --locked --no-install-project --no-dev
+WORKDIR /app
 
-COPY ./bot.py bot.py
-COPY ./resource_document.txt resource_document.txt
+# Copy dependency files
+COPY pyproject.toml uv.lock ./
+
+# Install uv
+RUN pip install --no-cache-dir uv
+
+# Install dependencies
+RUN uv sync --locked --no-dev
+
+# Copy application code
+COPY bot.py bot.py
+COPY resource_document.txt resource_document.txt
+
+CMD ["python", "bot.py", "--transport", "daily"]

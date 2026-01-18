@@ -1,0 +1,50 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.env
+env
+.env
+secrets.env
+venv/
+
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# RAG cache
+.rag_cache/
+
+# Local packages
+pipecat_murf_tts/
+__pycache__/
+
+# Python
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+.env
+.venv/
+env/
+venv/
+.rag_cache/
+pipecat_murf_tts/
+__pycache__/
+*.pyc

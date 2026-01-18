@@ -1,0 +1,8 @@
+agent_name = "pipecat-agent_v1"
+image = "gunjesh843/pipecat-agent_v1:0.1"
+secret_set = "env"
+agent_profile = "agent-2x"
+
+[scaling]
+        min_agents = 1
+        max_agents = 5

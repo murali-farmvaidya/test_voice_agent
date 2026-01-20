@@ -787,5 +787,17 @@ async def bot(runner_args: RunnerArguments):
 
 
 if __name__ == "__main__":
+    import os
+    import sys
     from pipecat.runner.run import main
+
+    port = os.environ.get("PORT", "7860")
+
+    if "--host" not in sys.argv:
+        sys.argv.extend(["--host", "0.0.0.0"])
+
+    if "--port" not in sys.argv:
+        sys.argv.extend(["--port", port])
+
+    # Do NOT force transport here
     main()

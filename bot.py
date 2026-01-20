@@ -787,17 +787,20 @@ async def bot(runner_args: RunnerArguments):
 
 
 if __name__ == "__main__":
-    import os
+    # ---------------- START PIPECAT BOT ----------------
+    # Pipecat's main() will handle all endpoints including:
+    # - / (health check)
+    # - /client (playground)
+    # - /api/offer, /start, /sessions/*, etc.
     import sys
     from pipecat.runner.run import main
-
+    
+    # Configure Pipecat to listen on 0.0.0.0 for Render deployment
     port = os.environ.get("PORT", "7860")
-
-    if "--host" not in sys.argv:
-        sys.argv.extend(["--host", "0.0.0.0"])
-
-    if "--port" not in sys.argv:
-        sys.argv.extend(["--port", port])
-
-    # Do NOT force transport here
+    sys.argv.extend([
+        "--transport", "webrtc",
+        "--host", "0.0.0.0",
+        "--port", port
+    ])
+    
     main()
